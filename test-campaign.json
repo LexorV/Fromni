@@ -1,0 +1,82 @@
+{
+  "name": "Тестовая кампания с клавиатурой",
+  "description": "Демонстрация функционала чата с кнопками",
+  "messages": [
+    {
+      "channelType": "telegram",
+      "text": "Добро пожаловать! Выберите действие:",
+      "keyboard": {
+        "displayType": "inline",
+        "buttons": [
+          {
+            "text": "📋 Каталог",
+            "type": "quick_reply",
+            "quickReplyText": "Показать каталог товаров"
+          },
+          {
+            "text": "🔗 Наш сайт",
+            "type": "url",
+            "url": "https://example.com"
+          },
+          {
+            "text": "📞 Поддержка",
+            "type": "quick_reply",
+            "quickReplyText": "Связаться с поддержкой"
+          }
+        ]
+      },
+      "order": 0
+    },
+    {
+      "channelType": "vkontakte",
+      "text": "Приветствуем в нашем сообществе! Что вас интересует?",
+      "keyboard": {
+        "displayType": "standard",
+        "buttons": [
+          {
+            "text": "🛍 Товары",
+            "type": "quick_reply",
+            "quickReplyText": "Посмотреть товары"
+          },
+          {
+            "text": "💬 Общение",
+            "type": "quick_reply",
+            "quickReplyText": "Перейти в чат"
+          },
+          {
+            "text": "ℹ️ О нас",
+            "type": "quick_reply",
+            "quickReplyText": "Узнать о компании"
+          },
+          {
+            "text": "🌐 Сайт",
+            "type": "url",
+            "url": "https://vk.com/example"
+          }
+        ]
+      },
+      "order": 1
+    },
+    {
+      "channelType": "whatsapp",
+      "text": "Здравствуйте! Как мы можем помочь?",
+      "keyboard": {
+        "displayType": "standard",
+        "buttons": [
+          {
+            "text": "Заказ",
+            "type": "quick_reply",
+            "quickReplyText": "Сделать заказ"
+          },
+          {
+            "text": "Вопрос",
+            "type": "quick_reply",
+            "quickReplyText": "Задать вопрос"
+          }
+        ]
+      },
+      "order": 2
+    }
+  ],
+  "isActive": true
+} 

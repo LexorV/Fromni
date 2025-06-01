@@ -9,13 +9,118 @@
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width<% if (ctx.mode.cordova || ctx.mode.capacitor) { %>, viewport-fit=cover<% } %>">
 
+    <!-- Дополнительные мобильные мета-теги -->
+    <meta name="theme-color" content="#027be3">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Кампании">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- Для лучшей производительности на мобильных -->
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <!-- Предотвращение зума при фокусе на input в iOS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no, viewport-fit=cover">
+
     <link rel="icon" type="image/png" sizes="128x128" href="icons/favicon-128x128.png">
     <link rel="icon" type="image/png" sizes="96x96" href="icons/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
     <link rel="icon" type="image/ico" href="favicon.ico">
+    
+    <!-- Добавляем touch icons для iOS -->
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="icons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="icons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="icons/apple-icon-120x120.png">
+    
+    <!-- Предотвращение мерцания при загрузке -->
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background-color: #fafafa;
+      }
+      
+      #q-app {
+        height: 100%;
+      }
+      
+      /* Базовые стили для предотвращения мерцания */
+      .loading-placeholder {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background-color: #fafafa;
+        font-family: 'Roboto', sans-serif;
+        color: #666;
+      }
+      
+      /* Спиннер загрузки */
+      .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #e0e0e0;
+        border-top: 4px solid #027be3;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      /* Оптимизация touch событий */
+      * {
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+      
+      input, textarea {
+        -webkit-user-select: text;
+        -moz-user-select: text;
+        -ms-user-select: text;
+        user-select: text;
+      }
+    </style>
   </head>
   <body>
+    <!-- Placeholder для плавной загрузки -->
+    <div id="loading-placeholder" class="loading-placeholder">
+      <div>
+        <div class="loading-spinner"></div>
+        <div style="margin-top: 16px;">Загрузка...</div>
+      </div>
+    </div>
+    
     <!-- quasar:entry-point -->
+    
+    <script>
+      // Удаляем placeholder после загрузки
+      window.addEventListener('load', function() {
+        const placeholder = document.getElementById('loading-placeholder');
+        if (placeholder) {
+          placeholder.style.display = 'none';
+        }
+      });
+      
+      // Предотвращение зума на iOS при двойном тапе
+      let lastTouchEnd = 0;
+      document.addEventListener('touchend', function (event) {
+        const now = (new Date()).getTime();
+        if (now - lastTouchEnd <= 300) {
+          event.preventDefault();
+        }
+        lastTouchEnd = now;
+      }, false);
+    </script>
   </body>
 </html>

@@ -1,1 +1,221 @@
 // app global css in SCSS form
+
+// Основные мобильные стили - только для экранов меньше 600px
+.mobile-optimized {
+  @media (max-width: 599px) {
+    padding: 8px !important;
+    
+    .q-card {
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12) !important;
+    }
+    
+    .q-btn {
+      min-height: 44px;
+      
+      &.q-btn--dense {
+        min-height: 36px;
+      }
+    }
+    
+    .q-field {
+      .q-field__control {
+        min-height: 44px;
+      }
+    }
+  }
+}
+
+// Адаптивные утилитарные классы
+.mobile-padding {
+  @media (max-width: 599px) {
+    padding: 12px !important;
+  }
+}
+
+.mobile-margin {
+  @media (max-width: 599px) {
+    margin: 8px !important;
+  }
+}
+
+.mobile-text-small {
+  @media (max-width: 599px) {
+    font-size: 0.875rem !important;
+  }
+}
+
+.mobile-full-width {
+  @media (max-width: 599px) {
+    width: 100% !important;
+  }
+}
+
+// Улучшения для touch интерфейса
+.touch-friendly {
+  .q-btn, .q-item {
+    min-height: 44px;
+    
+    @media (max-width: 599px) {
+      min-height: 48px;
+    }
+  }
+}
+
+// Скрытие/показ элементов на разных размерах экрана
+.show-mobile {
+  @media (min-width: 600px) {
+    display: none !important;
+  }
+}
+
+.hide-mobile {
+  @media (max-width: 599px) {
+    display: none !important;
+  }
+}
+
+// Адаптивные размеры шрифтов
+.responsive-text {
+  &.text-h4 {
+    @media (max-width: 599px) {
+      font-size: 1.5rem !important;
+    }
+  }
+  
+  &.text-h5 {
+    @media (max-width: 599px) {
+      font-size: 1.25rem !important;
+    }
+  }
+  
+  &.text-h6 {
+    @media (max-width: 599px) {
+      font-size: 1.125rem !important;
+    }
+  }
+}
+
+// Улучшения для форм на мобильных устройствах - только для экранов меньше 600px
+.mobile-form {
+  @media (max-width: 599px) {
+    .q-field {
+      margin-bottom: 16px;
+      
+      .q-field__control {
+        border-radius: 8px;
+      }
+    }
+    
+    .q-input .q-field__control {
+      min-height: 48px;
+    }
+    
+    .q-select .q-field__control {
+      min-height: 48px;
+    }
+    
+    .q-btn {
+      border-radius: 8px;
+      font-weight: 500;
+      
+      &.full-width {
+        margin-bottom: 8px;
+      }
+    }
+  }
+}
+
+// Мобильные карточки - только для экранов меньше 600px
+.mobile-card {
+  @media (max-width: 599px) {
+    .q-card {
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      
+      .q-card-section {
+        padding: 16px;
+        
+        &:first-child {
+          padding-top: 16px;
+        }
+        
+        &:last-child {
+          padding-bottom: 16px;
+        }
+      }
+    }
+  }
+}
+
+// Адаптивные табы - только для экранов меньше 600px
+.mobile-tabs {
+  @media (max-width: 599px) {
+    .q-tabs {
+      .q-tab {
+        min-height: 48px;
+        font-size: 0.875rem;
+        padding: 0 12px;
+      }
+    }
+    
+    .q-tab-panels {
+      .q-tab-panel {
+        padding: 0;
+      }
+    }
+  }
+}
+
+// Мобильные списки - только для экранов меньше 600px
+.mobile-list {
+  @media (max-width: 599px) {
+    .q-list {
+      .q-item {
+        min-height: 56px;
+        padding: 12px 16px;
+        
+        .q-item-section {
+          &.side {
+            min-width: 40px;
+          }
+        }
+        
+        .q-btn {
+          min-width: 40px;
+          min-height: 40px;
+        }
+      }
+    }
+  }
+}
+
+// Безопасная зона для iPhone с вырезом
+@supports (padding: max(0px)) {
+  .safe-area-padding {
+    padding-left: max(12px, env(safe-area-inset-left));
+    padding-right: max(12px, env(safe-area-inset-right));
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+  }
+}
+
+// Горизонтальная прокрутка для мобильных - только для экранов меньше 600px
+.mobile-scroll-x {
+  @media (max-width: 599px) {
+    overflow-x: auto;
+    white-space: nowrap;
+    
+    &::-webkit-scrollbar {
+      height: 4px;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 2px;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 2px;
+    }
+  }
+}

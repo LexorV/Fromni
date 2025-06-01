@@ -6,6 +6,7 @@ import { UsersModule } from './resources/users/users.module';
 import * as dotenv from 'dotenv';
 import configs from './config/config';
 import { ConfigModule } from '@nestjs/config';
+import { CampaignsModule } from './campaigns/campaigns.module';
 dotenv.config();
 
 @Module({
@@ -21,6 +22,7 @@ dotenv.config();
     ConfigModule.forRoot({
       load: [configs],
     }),
+    CampaignsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
