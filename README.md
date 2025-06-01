@@ -87,15 +87,10 @@ docker run -d -p 27017:27017 --name mongodb mongo:latest
 #### Запуск бэкенда
 ```bash
 cd backend
-
 # Режим разработки
 npm run start:dev
 # или
 yarn start:dev
-
-# Продакшн
-npm run build
-npm run start:prod
 ```
 
 #### Запуск фронтенда
@@ -107,8 +102,6 @@ npm run dev
 # или
 yarn dev
 
-# Сборка для продакшн
-npm run build
 ```
 
 ### 5. Доступ к приложению
