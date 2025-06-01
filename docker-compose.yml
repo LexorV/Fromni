@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+     # image: ${{ secrets.BACKEND_IMAGE_NAME }}/backend:latest
+    container_name: ${NAME_BACKEND}
+    ports:
+      - '3000:3000'
+    depends_on:
+      - mongo
+    environment:
+      - DATABASE_URI=mongodb://mongo:27017
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASS=${DATABASE_PASS}
+      - MONGODB_DATABASE=${MONGODB_DATABASE}
+
+  mongo:
+    image: mongo:4.4
+    container_name: ${NAME_BASE}
+    ports:
+      - '27022:27017'
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      - mongo_data:/data/db
+  frontend:
+    container_name: ${NAME_FRONTEND}
+    #image: ${{ secrets.FRONTEND_IMAGE_NAME }}/frontend:latest
+    build: ./frontend
+    ports: 
+    - "3020:80"
+    tty: true
+    stdin_open: true
+    restart: on-failure
+    depends_on: 
+     - backend
+volumes:
+  mongo_data:
