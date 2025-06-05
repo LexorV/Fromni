@@ -2,21 +2,30 @@ version: '3.8'
 
 services:
   backend:
-    build:
-      context: ./backend
-     # image: ${{ secrets.BACKEND_IMAGE_NAME }}/backend:latest
+    #build: ./backend
+    image: lexv/fromni-backend:latest
     container_name: ${NAME_BACKEND}
     ports:
       - '3000:3000'
-    depends_on:
-      - mongo
     environment:
-      - DATABASE_URI=mongodb://mongo:27017
+    
+      - DATABASE_URI=mongodb://${DATABASE_USER}:${DATABASE_PASS}@mongodb:27017/${MONGODB_DATABASE}?authSource=admin
       - DATABASE_USER=${DATABASE_USER}
       - DATABASE_PASS=${DATABASE_PASS}
-      - MONGODB_DATABASE=${MONGODB_DATABASE}
+      - DATABASE_NAME=${MONGODB_DATABASE}
+      - FRONTEND_DOMAIN=${FRONTEND_DOMAIN}
 
-  mongo:
+    env_file:
+      - .env
+    volumes:
+      - data-files:/app/dist/static   
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - fromni-network
+
+  mongodb:
     image: mongo:4.4
     container_name: ${NAME_BASE}
     ports:
@@ -25,11 +34,29 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
     volumes:
-      - mongo_data:/data/db
+      - data-files:/app/dist/static
+      - mongo-data:/data/db
+    env_file:
+      - .env
+    networks:
+      - fromni-network
+    command: mongod --bind_ip_all
+    healthcheck:
+      test: |
+        mongo admin --host localhost --port 27017 \
+        -u ${MONGO_INITDB_ROOT_USERNAME} \
+        -p ${MONGO_INITDB_ROOT_PASSWORD} \
+        --quiet --eval 'quit(db.adminCommand("ping").ok == 1 ? 0 : 1)'
+      interval: 10s
+      timeout: 10s
+      retries: 12
+      start_period: 40s
+
   frontend:
     container_name: ${NAME_FRONTEND}
+    image: lexv/fromni-frontend:latest
     #image: ${{ secrets.FRONTEND_IMAGE_NAME }}/frontend:latest
-    build: ./frontend
+    #build: ./frontend
     ports: 
     - "3020:80"
     tty: true
@@ -37,5 +64,14 @@ services:
     restart: on-failure
     depends_on: 
      - backend
+    networks:
+      - fromni-network
+
 volumes:
-  mongo_data:
+  data:
+  data-files:
+  mongo-data:
+
+networks:
+  fromni-network:
+    driver: bridge

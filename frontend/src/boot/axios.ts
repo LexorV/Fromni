@@ -15,7 +15,10 @@ declare module 'vue' {
 // "export default () => {}" function below (which runs individually
 // for each client)
 const api = axios.create({
-  baseURL: process.env.API_URL || 'http://localhost:3000',
+  baseURL:
+    process.env.NODE_ENV != 'production'
+      ? 'http://localhost:3000'
+      : `https://api.${window.location.hostname}`,
   withCredentials: true,
 });
 

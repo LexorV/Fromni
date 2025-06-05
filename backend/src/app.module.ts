@@ -11,13 +11,7 @@ dotenv.config();
 
 @Module({
   imports: [
-    MongooseModule.forRoot(configs().database.dbUri, {
-      dbName: configs().database.databaseName,
-      auth: {
-        username: configs().database.username,
-        password: configs().database.password,
-      },
-    }),
+    MongooseModule.forRoot(configs().database.dbUri),
     UsersModule,
     ConfigModule.forRoot({
       load: [configs],
